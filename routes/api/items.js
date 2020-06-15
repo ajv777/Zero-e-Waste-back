@@ -22,6 +22,33 @@ router.get('/:itemId', async(req, res) => {
     
 })
 
+router.get('/by-name-asc/:nombre', async(req, res) => {
+    try {
+        const rows = await itemsModel.getByNameAsc(req.params.nombre)
+        res.json(rows)
+    } catch(err){
+        res.status(500).json({error: err.message})
+    }
+})
+
+router.get('/by-name-desc/:nombre', async(req, res) => {
+    try {
+        const rows = await itemsModel.getByNameDesc(req.params.nombre)
+        res.json(rows)
+    } catch(err){
+        res.status(500).json({error: err.message})
+    }
+})
+
+router.get('/by-date/:nombre', async(req, res) => {
+    try {
+        const rows = await itemsModel.getByRegDate(req.params.nombre)
+        res.json(rows)
+    }catch(err){
+        res.status(500).json({error: err.message})
+    }
+})
+
 //POST http://localhost:3000/api/items
 router.post('/', async(req, res) => {
    try{
@@ -49,6 +76,8 @@ router.put('/:itemId', async (req, res) => {
         res.status(500).json({error: err.message})
     }
 })
+
+
 
 //DELETE http://localhost:3000/api/items
 router.delete('/:itemId', async(req, res) =>{

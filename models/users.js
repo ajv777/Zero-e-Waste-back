@@ -48,6 +48,33 @@ const remove = (pUsersId) => {
     })
 }
 
+//Instalar jasonwebtoken y moment
+//El token se crea aquí
+//Ejemplo cogido de la app de gimnasios
+/* function createToken(pUserId) {
+    const payload = {
+        userId: pUserId,
+        createdAt: moment().unix(),
+        expiredAt: moment().add(15, 'minutes').unix()
+    }
+    return jwt.sign(payload, process.env.SECRET_KEY)
+} */
+
+//Crear un fichero de middlewares en routes
+//Middlewares exporta 
+
+//En api va algo así como (cogido de gimnasio)
+/* const {checkToken} = require('./middlewares')
+
+router.use('/clientes', checkToken, apliClientesRouter) */
+
+//Para saber qué hacer con el token, la respuesta está en los middlewares de appgimnasio
+
+//Merece la pena echar un ojo al isAdmin (Middlewares:43, routes/api/clientes: 30). 
+//Quizás se puede usar el mismo método para restringir acceso a usuarios que no están logueados
+
+
+
 module.exports = {
     getAll, getById, create, updateById, remove
 }
