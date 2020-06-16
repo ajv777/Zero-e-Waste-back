@@ -2,6 +2,7 @@ const router = require('express').Router()
 const usersModel = require('../../models/users')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const moment = require('moment')
 
 // QUERIES START HERE
 router.get('/', async(req, res) => {
@@ -83,7 +84,26 @@ router.post('/login', async(req, res) => {
   const user = await usersModel.getByEmail(req.body.email)
   if(user){
     const same = bcrypt.compareSync(req.body.password.usuario.password)
+    if(same){
+      createToken(user.id_user)
+      res.json({success: 'login correcto', token: createToken(user.id_user)})
+    }else{
+      res.json({error: 'Error en email y/o contraseña'})
+    }
+  }else{
+    res.json({error: 'Error en email y/o contraseña'})
   }
 })
+
+// Token creation
+function createToken(pUserId){
+  const payload = {
+    userId: pUserId, 
+    createdAt: moment().unix(),
+    expiredAt: moment().add(15, 'minutes').unix()
+  }
+  return jwt.sign(payload, process.env.SECRET_KEY)
+}
+
 // LOGIN ENDS HERE
 module.exports = router;

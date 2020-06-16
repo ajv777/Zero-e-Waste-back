@@ -16,6 +16,15 @@ const getById = (pUsersId) => {
     })
 }
 
+const getByEmail = (pUsersEmail) => {
+    return new Promise((resolve, reject) => {
+        db.query("Select * from users where email = ?", [pUsersEmail], (err, rows) => {
+            if(err) reject(err)
+            resolve(rows)
+        })
+    })
+}
+
 const create = (pData) => {
     return new Promise((resolve, reject) => {
         db.query("insert into users (name, surname, address, pc, localidad, province, phone_number, whatsapp, email, latitude, longitude, signup_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -76,5 +85,5 @@ router.use('/clientes', checkToken, apliClientesRouter) */
 
 
 module.exports = {
-    getAll, getById, create, createUser, updateById, remove
+    getAll, getById, getByEmail, create, updateById, remove
 }
