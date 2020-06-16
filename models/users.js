@@ -76,5 +76,5 @@ router.use('/clientes', checkToken, apliClientesRouter) */
 
 
 module.exports = {
-    getAll, getById, create, updateById, remove
+    getAll, getById, create, createUser, updateById, remove
 }

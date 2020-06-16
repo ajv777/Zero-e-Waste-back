@@ -64,7 +64,26 @@ router.delete('/:usersId', async(req, res) => {
 
 // LOGIN STARTS HERE
 
+// Retistro
+router.post('/register', async(req, res) => {
 
+  //He dejado la longitud de contraseña como 15, pero dejo esto comentado para que sepamos donde está
+  req.body.password = bcrypt.hashSync(req.body.password, 15)
 
+  const result = await usersModel.create(req.body)
+  if(result.affectedRows >= 1){
+    res.json({success: "Usuario registrado"})
+  }else{
+    res.json({error: "Registro fallido"})
+  }
+})
+
+// Login
+router.post('/login', async(req, res) => {
+  const user = await usersModel.getByEmail(req.body.email)
+  if(user){
+    const same = bcrypt.compareSync(req.body.password.usuario.password)
+  }
+})
 // LOGIN ENDS HERE
 module.exports = router;
