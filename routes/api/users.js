@@ -3,6 +3,7 @@ const usersModel = require('../../models/users')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
+// QUERIES START HERE
 router.get('/', async(req, res) => {
   try{
     const rows = await usersModel.getAll()
@@ -59,5 +60,11 @@ router.delete('/:usersId', async(req, res) => {
     res.status(500).json({error: err.message})
   }
 })
+// QUERIES END HERE
 
+// LOGIN STARTS HERE
+
+
+
+// LOGIN ENDS HERE
 module.exports = router;
