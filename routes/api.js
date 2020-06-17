@@ -8,6 +8,7 @@ const apiCatsRouter = require('./api/cats')
     res.send ('Estoy en /api')
 }) */
 
+const {checkToken} = require('./middlewares')
 
 router.use('/items', apiItemsRouter); // he quitado el /api/ porque ya estamos en api y por ello no es necesario
 router.use('/users', apiUsersRouter);
