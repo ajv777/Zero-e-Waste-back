@@ -58,6 +58,15 @@ router.get('/by-date/:nombre', async(req, res) => {
     }
 })
 
+router.get('/by-user/:nombre', async(req, res) => {
+    try{
+        const rows = await itemsModel.getByUser(req.params.nombre)
+        res.json(rows)
+    }catch(err){
+        res.status(500).json({error: err.message})
+    }
+})
+
 //POST http://localhost:3000/api/items
 router.post('/', async(req, res) => {
    try{
