@@ -62,7 +62,7 @@ const getByRegDate = (pCatName) => {
 const create = (pData) => {
     return new Promise((resolve, reject) => {
         db.query('insert into items (name, description, register_date, pic_1, pic_2, pic_3, precio, post_delivery, hand_delivery, users_id_user, category_idCategory) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [pData.name, pData.description, pData.register_date, pData.pic_1, pData.pic_2, pData.pic_3, pData.precio, pData.post_delivery, pData.hand_delivery, pData.users_id_user, pData.category_idCategory],
+        [pData.name, pData.description, pData.register_date, pData.pic_1, pData.pic_2, pData.pic_3, pData.precio, pData.post_delivery, pData.hand_delivery, pData.users_id_user, pData.category],
         (err, result) => {
             if (err) reject(err)
             resolve(result)
