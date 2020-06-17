@@ -23,19 +23,6 @@ router.get('/:usersId', async(req, res) => {
   }
 })
 
-router.post('/', async(req, res) =>{
-  try{
-    const result = await usersModel.create(req.body)
-    if(result.affectedRows >= 1){
-      res.json({success: "User was created"})
-    }else{
-      res.json({error: "Create failed"})
-    }
-  }catch(err){
-    res.status(500).json({error: err.message})
-  }
-})
-
 router.put('/:usersId', async(req, res) => {
   try{
     const result = await usersModel.updateById(req.params.usersId, req.body)
@@ -71,10 +58,10 @@ router.post('/', async(req, res) => {
   try{
     // el 2 es el factor de carga. Cuando dejemos de hacer pruebas es mejor subirlo a 10-12
     req.body.password = bcrypt.hashSync(req.body.password, 2)
-
+    console.log(req.body)
     const result = await usersModel.create(req.body)
     if(result.affectedRows >= 1){
-      res.json({success: "Usuario registrado"})
+      res.json({success: "Usuario registrado", token: createToken(result.insertId)})
     }else{
       res.json({error: "Registro fallido"})
     }
@@ -88,9 +75,7 @@ router.post('/', async(req, res) => {
 router.post('/login', async(req, res) => {
   const user = await usersModel.getByEmail(req.body.email)
   if(user){
-    console.log(req.body.password, user.password)
-    const same = bcrypt.compareSync(req.body.password, user.password)
-    console.log(same)
+    const same = bcrypt.compareSync(req.body.password, user.Password)
     if(same){
       res.json({success: 'login correcto', token: createToken(user.Id_User)})
     }else{
