@@ -61,7 +61,7 @@ router.post('/', async(req, res) => {
     console.log(req.body)
     const result = await usersModel.create(req.body)
     if(result.affectedRows >= 1){
-      res.json({success: "Usuario registrado", token: createToken(result.insertId)})
+      res.json({success: "Usuario registrado"})
     }else{
       res.json({error: "Registro fallido"})
     }
