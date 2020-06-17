@@ -18,6 +18,16 @@ const getById = (pItemId) => {
     })
 }
 
+// Sort by category. No order
+const getByCat = (pCatName) => {
+    return new Promise((resolve, reject) => {
+        db.query('select * from items where Category_idCategory = ?', [pCatName], (err, rows) => {
+            if(err) reject(err)
+            resolve(rows)
+        })
+    })
+}
+
 // Sort by category order by precio asc
 const getByNameAsc = (pCatName) => {
     return new Promise((resolve, reject) => {
@@ -85,5 +95,5 @@ const remove = (pItemId) => {
 }
 
 module.exports = {
-    getAll, getById, getByNameAsc, getByNameDesc, getByRegDate, create, updateById, remove
+    getAll, getById, getByCat, getByNameAsc, getByNameDesc, getByRegDate, create, updateById, remove
 } 

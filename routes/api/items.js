@@ -22,6 +22,15 @@ router.get('/:itemId', async(req, res) => {
     
 })
 
+router.get('/by-cat/:catName', async(req, res) =>{
+    try{
+        const row = await itemsModel.getByCat(req.params.catName)
+        res.json(row)
+    }catch(err){
+        res.status(500).json({error: err.message})
+    }
+})
+
 router.get('/by-name-asc/:nombre', async(req, res) => {
     try {
         const rows = await itemsModel.getByNameAsc(req.params.nombre)
