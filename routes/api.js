@@ -10,8 +10,8 @@ const apiCatsRouter = require('./api/cats')
 
 const {checkToken} = require('./middlewares')
 
-router.use('/items', apiItemsRouter); // he quitado el /api/ porque ya estamos en api y por ello no es necesario
+router.use('/items', checkToken, apiItemsRouter); // he quitado el /api/ porque ya estamos en api y por ello no es necesario
 router.use('/users', apiUsersRouter);
-router.use('/cats', apiCatsRouter)
+router.use('/cats', checkToken, apiCatsRouter)
 
 module.exports = router;

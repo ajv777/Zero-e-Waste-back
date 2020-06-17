@@ -3,9 +3,10 @@ const usersModel = require('../../models/users')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const moment = require('moment')
+const {checkToken} = require('../middlewares')
 
 // QUERIES START HERE
-router.get('/', async(req, res) => {
+router.get('/', checkToken, async(req, res) => {
   try{
     const rows = await usersModel.getAll()
     res.json(rows)
@@ -14,7 +15,7 @@ router.get('/', async(req, res) => {
   }
 })
 
-router.get('/:usersId', async(req, res) => {
+router.get('/:usersId', checkToken, async(req, res) => {
   try{
     const row = await usersModel.getById(req.params.usersId)
     res.json(row)
@@ -23,7 +24,7 @@ router.get('/:usersId', async(req, res) => {
   }
 })
 
-router.put('/:usersId', async(req, res) => {
+router.put('/:usersId', checkToken, async(req, res) => {
   try{
     const result = await usersModel.updateById(req.params.usersId, req.body)
     if(result.affectedRows >= 1){
@@ -36,7 +37,7 @@ router.put('/:usersId', async(req, res) => {
   }
 })
 
-router.delete('/:usersId', async(req, res) => {
+router.delete('/:usersId', checkToken, async(req, res) => {
   try{
     const result = await usersModel.remove(req.params.usersId)
     if(result.affectedRows >= 1){

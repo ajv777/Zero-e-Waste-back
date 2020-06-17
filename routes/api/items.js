@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const itemsModel = require('../../models/items')
 const items = require('../../models/items')
+const { checkToken } = require('../middlewares')
 
 //GET /api/items
 router.get('/', async (req, res) => {
@@ -71,7 +72,10 @@ router.get('/by-user/:nombre', async(req, res) => {
 //POST http://localhost:3000/api/items
 router.post('/', async(req, res) => {
    try{
-        const result = await itemsModel.create(req.body)
+       //con las tres líneas siguientes se aumenta la seguridad. Con esto evitamos que un usuario pueda registrar otro usuario cuando crea un objeto, lo cual no sería posible desde front pero sí con un ataque vía postman
+       const data = req.body
+       data.users_id_user = req.token.userId
+        const result = await itemsModel.create(data)
         if(result.affectedRows >= 1){
             res.json({success: 'Item was created'})
         }else{
