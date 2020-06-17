@@ -66,24 +66,31 @@ router.delete('/:usersId', async(req, res) => {
 // LOGIN STARTS HERE
 
 // Retistro
-router.post('/register', async(req, res) => {
+router.post('/', async(req, res) => {
+  console.log(req.body)
+  try{
+    //He dejado la longitud de contraseña como 15, pero dejo esto comentado para que sepamos donde está
+    req.body.password = bcrypt.hashSync(req.body.password, 15)
 
-  //He dejado la longitud de contraseña como 15, pero dejo esto comentado para que sepamos donde está
-  req.body.password = bcrypt.hashSync(req.body.password, 15)
-
-  const result = await usersModel.create(req.body)
-  if(result.affectedRows >= 1){
-    res.json({success: "Usuario registrado"})
-  }else{
-    res.json({error: "Registro fallido"})
+    const result = await usersModel.create(req.body)
+    if(result.affectedRows >= 1){
+      res.json({success: "Usuario registrado"})
+    }else{
+      res.json({error: "Registro fallido"})
+    }
+  }catch(err){
+    res.status(500).json({error: err.message})
   }
+  
 })
 
 // Login
 router.post('/login', async(req, res) => {
   const user = await usersModel.getByEmail(req.body.email)
+  console.log("hola juanan")
   if(user){
     const same = bcrypt.compareSync(req.body.password.usuario.password)
+    console.log(same)
     if(same){
       createToken(user.id_user)
       res.json({success: 'login correcto', token: createToken(user.id_user)})
@@ -99,11 +106,13 @@ router.post('/login', async(req, res) => {
 function createToken(pUserId){
   const payload = {
     userId: pUserId, 
-    createdAt: moment().unix(),
-    expiredAt: moment().add(15, 'minutes').unix()
+    /* createdAt: moment().unix(),
+    expiredAt: moment().add(15, 'minutes').unix() */
   }
   return jwt.sign(payload, process.env.SECRET_KEY)
 }
+
+
 
 // LOGIN ENDS HERE
 module.exports = router;
