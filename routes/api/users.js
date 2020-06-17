@@ -69,8 +69,8 @@ router.delete('/:usersId', async(req, res) => {
 router.post('/', async(req, res) => {
   console.log(req.body)
   try{
-    //He dejado la longitud de contraseña como 15, pero dejo esto comentado para que sepamos donde está
-    req.body.password = bcrypt.hashSync(req.body.password, 15)
+    // el 2 es el factor de carga. Cuando dejemos de hacer pruebas es mejor subirlo a 10-12
+    req.body.password = bcrypt.hashSync(req.body.password, 2)
 
     const result = await usersModel.create(req.body)
     if(result.affectedRows >= 1){
@@ -87,13 +87,12 @@ router.post('/', async(req, res) => {
 // Login
 router.post('/login', async(req, res) => {
   const user = await usersModel.getByEmail(req.body.email)
-  console.log("hola juanan")
   if(user){
-    const same = bcrypt.compareSync(req.body.password.usuario.password)
+    console.log(req.body.password, user.password)
+    const same = bcrypt.compareSync(req.body.password, user.password)
     console.log(same)
     if(same){
-      createToken(user.id_user)
-      res.json({success: 'login correcto', token: createToken(user.id_user)})
+      res.json({success: 'login correcto', token: createToken(user.Id_User)})
     }else{
       res.json({error: 'Error en email y/o contraseña'})
     }
@@ -106,10 +105,12 @@ router.post('/login', async(req, res) => {
 function createToken(pUserId){
   const payload = {
     userId: pUserId, 
-    /* createdAt: moment().unix(),
-    expiredAt: moment().add(15, 'minutes').unix() */
   }
-  return jwt.sign(payload, process.env.SECRET_KEY)
+  const options = {
+    //Esto es necesario hacerlo porque es necesario que el token caduque. Si le roban el token al usuario y no expira, se puede usar indefinidamente.
+    expiresIn: '60days'
+  }
+  return jwt.sign(payload, process.env.SECRET_KEY, options)
 }
 
 

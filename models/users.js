@@ -20,7 +20,7 @@ const getByEmail = (pUsersEmail) => {
     return new Promise((resolve, reject) => {
         db.query("Select * from users where email = ?", [pUsersEmail], (err, rows) => {
             if(err) reject(err)
-            resolve(rows)
+            resolve(rows[0])
         })
     })
 }
