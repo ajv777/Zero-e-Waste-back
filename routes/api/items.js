@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const itemsModel = require('../../models/items')
+const items = require('../../models/items')
 
 //GET /api/items
 router.get('/', async (req, res) => {
@@ -31,18 +32,18 @@ router.get('/by-cat/:catName', async(req, res) =>{
     }
 })
 
-router.get('/by-name-asc/:nombre', async(req, res) => {
+router.get('/by-price-asc/:nombre', async(req, res) => {
     try {
-        const rows = await itemsModel.getByNameAsc(req.params.nombre)
+        const rows = await itemsModel.getByPriceAsc(req.params.nombre)
         res.json(rows)
     } catch(err){
         res.status(500).json({error: err.message})
     }
 })
 
-router.get('/by-name-desc/:nombre', async(req, res) => {
+router.get('/by-price-desc/:nombre', async(req, res) => {
     try {
-        const rows = await itemsModel.getByNameDesc(req.params.nombre)
+        const rows = await itemsModel.getByPriceDesc(req.params.nombre)
         res.json(rows)
     } catch(err){
         res.status(500).json({error: err.message})
@@ -111,4 +112,4 @@ router.delete('/:itemId', async(req, res) =>{
     }
 })
 
-module.exports = router //comentario para hacer commi
+module.exports = router 

@@ -29,7 +29,7 @@ const getByCat = (pCatName) => {
 }
 
 // Sort by category order by precio asc
-const getByNameAsc = (pCatName) => {
+const getByPriceAsc = (pCatName) => {
     return new Promise((resolve, reject) => {
         db.query("select * from items where Category_idCategory = ? order by precio asc", [pCatName], (err, rows) => {
             if(err) reject(err)
@@ -39,7 +39,7 @@ const getByNameAsc = (pCatName) => {
 }
 
 // Sort by category order by precio desc
-const getByNameDesc = (pCatName) => {
+const getByPriceDesc = (pCatName) => {
     return new Promise((resolve, reject) => {
         db.query("select * from items where Category_idCategory = ? order by precio desc", [pCatName], (err, rows) => {
             if(err) reject(err)
@@ -67,6 +67,7 @@ const getByUser = (pUserName) => {
         })
     })
 }
+
 // Create an item
 // Al usar pData, eliminamos la necesidad de mantener orden en el segundo parámetro. La principal ventaja de esto es que si decidimos añadir más parámetros a la base de datos, es mucho menos lío implementarlos desde back
 const create = (pData) => {
@@ -105,5 +106,5 @@ const remove = (pItemId) => {
 }
 
 module.exports = {
-    getAll, getById, getByCat, getByNameAsc, getByNameDesc, getByRegDate, getByUser, create, updateById, remove
+    getAll, getById, getByCat, getByPriceAsc: getByPriceAsc, getByPriceDesc, getByRegDate, getByUser, create, updateById, remove
 } 
