@@ -15,6 +15,7 @@ router.get('/', checkToken, async(req, res) => {
   }
 })
 
+// Perfil de usuario
 router.get('/:usersId', checkToken, async(req, res) => {
   try{
     const row = await usersModel.getById(req.params.usersId)
@@ -24,6 +25,7 @@ router.get('/:usersId', checkToken, async(req, res) => {
   }
 })
 
+// Editar perfil de usuario
 router.put('/:usersId', checkToken, async(req, res) => {
   try{
     const result = await usersModel.updateById(req.params.usersId, req.body)
@@ -37,6 +39,7 @@ router.put('/:usersId', checkToken, async(req, res) => {
   }
 })
 
+// Eliminar perfil de usuario
 router.delete('/:usersId', checkToken, async(req, res) => {
   try{
     const result = await usersModel.remove(req.params.usersId)

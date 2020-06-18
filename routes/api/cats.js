@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const catsModel = require('../../models/cats')
 
+// compra -> select con categorías
 router.get('/', async(req, res) => {
     try {
         const rows = await catsModel.getAll()

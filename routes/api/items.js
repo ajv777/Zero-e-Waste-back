@@ -4,6 +4,7 @@ const items = require('../../models/items')
 const { checkToken } = require('../middlewares')
 
 //GET /api/items
+//
 router.get('/', async (req, res) => {
     try {
         const rows = await itemsModel.getAll()
@@ -14,6 +15,7 @@ router.get('/', async (req, res) => {
     }
 })
 
+// Detalle de item
 router.get('/:itemId', async(req, res) => {
     try {
         const row = await itemsModel.getById(req.params.itemId)
@@ -24,6 +26,7 @@ router.get('/:itemId', async(req, res) => {
     
 })
 
+// Compra -> es lo que sale cuando escoges una categoría en el select
 router.get('/by-cat/:catName', async(req, res) =>{
     try{
         const row = await itemsModel.getByCat(req.params.catName)
@@ -33,6 +36,7 @@ router.get('/by-cat/:catName', async(req, res) =>{
     }
 })
 
+// Compra -> botón "Precio (de mayor a menor)"
 router.get('/by-price-asc/:nombre', async(req, res) => {
     try {
         const rows = await itemsModel.getByPriceAsc(req.params.nombre)
@@ -42,6 +46,7 @@ router.get('/by-price-asc/:nombre', async(req, res) => {
     }
 })
 
+// Compra -> botón "Precio (de menor a mayor)"
 router.get('/by-price-desc/:nombre', async(req, res) => {
     try {
         const rows = await itemsModel.getByPriceDesc(req.params.nombre)
@@ -51,6 +56,7 @@ router.get('/by-price-desc/:nombre', async(req, res) => {
     }
 })
 
+// Compra -> botón "Fecha de subida (más recientes)"
 router.get('/by-date/:nombre', async(req, res) => {
     try {
         const rows = await itemsModel.getByRegDate(req.params.nombre)
@@ -60,6 +66,7 @@ router.get('/by-date/:nombre', async(req, res) => {
     }
 })
 
+// usuario/:userid -> Mis productos en venta
 router.get('/by-user/:nombre', async(req, res) => {
     try{
         const rows = await itemsModel.getByUser(req.params.nombre)
@@ -69,7 +76,7 @@ router.get('/by-user/:nombre', async(req, res) => {
     }
 })
 
-//POST http://localhost:3000/api/items
+// vender -> formulario de venta
 router.post('/', async(req, res) => {
    try{
        //con las tres líneas siguientes se aumenta la seguridad. Con esto evitamos que un usuario pueda registrar otro usuario cuando crea un objeto, lo cual no sería posible desde front pero sí con un ataque vía postman
@@ -86,7 +93,7 @@ router.post('/', async(req, res) => {
     }
 })
 
-//PUT http://localhost:3000/api/items/:id
+// usuario/:usuarioid -> editar productos en perfil (creo)
 router.put('/:itemId', async (req, res) => {
     try{
         const result = await itemsModel.updateById(req.params.itemId, req.body)
