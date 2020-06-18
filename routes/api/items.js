@@ -1,7 +1,11 @@
 const router = require('express').Router()
 const itemsModel = require('../../models/items')
-const items = require('../../models/items')
 const { checkToken } = require('../middlewares')
+const app = require('express')
+
+
+
+
 
 //GET /api/items
 //
@@ -121,6 +125,16 @@ router.delete('/:itemId', async(req, res) =>{
     }catch(err) {
         res.status(500).json({error: err.message})
     }
+})
+
+// IMAGE UPLOAD
+
+
+// Image endpoint
+
+
+router.post('/uploadimg', (req, res) => {
+    res.json({'message': 'File was uploaded'})
 })
 
 module.exports = router 

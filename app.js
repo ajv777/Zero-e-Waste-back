@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 
+
 const apiRouter = require('./routes/api'); // he quitado el itemsRouter y el usersRouter porque ya están definidos dentro de apiRouter, así que los cargamos desde ahí.
 
 require('dotenv').config()

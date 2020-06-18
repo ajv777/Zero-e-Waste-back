@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken')
 const moment = require('moment')
 const usersModel = require('../models/users')
+const multipart = require('connect-multiparty')
+
 
 // Check the token we get in the head
 const checkToken = (req, res, next) => {
@@ -23,6 +25,10 @@ const checkToken = (req, res, next) => {
 
 }
 
+const multipartMW = multipart({
+    uploadDir: './media'
+})
+
 module.exports = {
-    checkToken
+    checkToken, multipartMW
 }
