@@ -132,7 +132,6 @@ router.delete('/:itemId', async(req, res) =>{
 
 // Image endpoint
 
-
 router.post('/uploadimg', (req, res) => {
     res.json({'message': 'File was uploaded'})
 })
