@@ -40,7 +40,7 @@ const create = (pData) => {
 const updateById = (pUsersId, pData) => {
     return new Promise((resolve, reject) => {
         db.query("Update users set name = ?, surname = ?, address = ?, pc = ?, localidad = ?, province = ?, phone_number = ?, whatsapp = ?, email = ?, latitude = ?, longitude = ?, signup_date = ? where Id_User = ?",
-        [pData.name, pData.surname, pData.address, pData.pc, pData.localidad, pData.province, pData.phone_number, pData.whatsapp, pData.email, pData.latitude, pData.longitude, pData.signup_date, pUsersId],
+        [pData.Name, pData.Surname, pData.Address, pData.PC, pData.Localidad, pData.Province, pData.Phone_number, pData.Whatsapp, pData.Email, pData.Latitude, pData.Longitude, pData.Signup_date, pUsersId],
         (err, result) => {
             if(err) reject(err)
             resolve(result)

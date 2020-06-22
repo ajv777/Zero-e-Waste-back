@@ -28,6 +28,7 @@ router.get("/:usersId", checkToken, async (req, res) => {
 // Editar perfil de usuario
 router.put("/:usersId", checkToken, async (req, res) => {
   try {
+    console.log (req.body)
     const result = await usersModel.updateById(req.params.usersId, req.body);
     if (result.affectedRows >= 1) {
       res.json({ success: "User was updated" });

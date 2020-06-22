@@ -100,6 +100,7 @@ router.post('/', async(req, res) => {
 // usuario/:usuarioid -> editar productos en perfil (creo)
 router.put('/:itemId', async (req, res) => {
     try{
+        console.log(req.body)
         const result = await itemsModel.updateById(req.params.itemId, req.body)
         if(result.affectedRows >= 1 ){
             res.json({success: 'item was updated'})
@@ -108,6 +109,7 @@ router.put('/:itemId', async (req, res) => {
         }
     }catch(err) {
         res.status(500).json({error: err.message})
+
     }
 })
 
