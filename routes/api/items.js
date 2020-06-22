@@ -4,9 +4,6 @@ const { checkToken } = require('../middlewares')
 const app = require('express')
 
 
-
-
-
 //GET /api/items
 //
 router.get('/', async (req, res) => {
@@ -70,7 +67,7 @@ router.get('/by-date/:nombre', async(req, res) => {
     }
 })
 
-// usuario/:userid -> Mis productos en venta
+// usuario/:userid -> Mis productos en venta 
 router.get('/by-user/:nombre', async(req, res) => {
     try{
         const rows = await itemsModel.getByUser(req.params.nombre)
