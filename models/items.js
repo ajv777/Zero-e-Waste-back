@@ -107,4 +107,4 @@ const remove = (pItemId) => {
 
 module.exports = {
     getAll, getById, getByCat, getByPriceAsc: getByPriceAsc, getByPriceDesc, getByRegDate, getByUser, create, updateById, remove
-} 
+}  //comentario de prueba
