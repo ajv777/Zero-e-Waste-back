@@ -2,6 +2,7 @@ const router = require('express').Router()
 const itemsModel = require('../../models/items')
 const { checkToken } = require('../middlewares')
 const app = require('express')
+const path = require('path')
 
 
 //GET /api/items
@@ -79,17 +80,20 @@ router.get('/by-user/:nombre', async(req, res) => {
 
 // vender -> formulario de venta
 router.post('/', async(req, res) => {
-   try{
-       //con las tres líneas siguientes se aumenta la seguridad. Con esto evitamos que un usuario pueda registrar otro usuario cuando crea un objeto, lo cual no sería posible desde front pero sí con un ataque vía postman
-       const data = req.body
-       data.users_id_user = req.token.userId
+    try{
+        //con las tres líneas siguientes se aumenta la seguridad. Con esto evitamos que un usuario pueda registrar otro usuario cuando crea un objeto, lo cual no sería posible desde front pero sí con un ataque vía postman
+        const data = req.body
+        data.users_id_user = req.token.userId
+        data.pic_1 = req.files.pic_1 ? path.basename(req.files.pic_1.path) : null;
+        data.pic_2 = req.files.pic_2 ? path.basename(req.files.pic_2.path) : null;
+        data.pic_3 = req.files.pic_3 ? path.basename(req.files.pic_3.path) : null;
         const result = await itemsModel.create(data)
         if(result.affectedRows >= 1){
             res.json({success: 'Item was created'})
         }else{
             res.json({error: 'Create failed'})
         }
-   }catch(err) {
+    }catch(err) {
         res.status(500).json({error: err.message})
     }
 })
