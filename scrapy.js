@@ -4,7 +4,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 
 const { connect } = require('./db')
-const { create, removeAll } = require('./models/epoints')
+const { create, removeAll, getAll } = require('./models/epoints')
 
 const url = 'https://www.ecolec.es/reciclar-aparatos-electronicos/'
 const arrPins= []
@@ -27,7 +27,7 @@ async function getPinCoords(pUrl){
     for(const coord of coords ){
         await create(coord)
     }
-
+    getAll()
     process.exit()
 }
 

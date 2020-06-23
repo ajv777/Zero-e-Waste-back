@@ -1,5 +1,16 @@
 // This is a model for recycling related queries
 
+// Deletes table content
+const removeAll = () => {
+    return new Promise((resolve, reject) => {
+        db.query('delete from epoints',
+        (err, result) => {
+            if(err) reject(err)
+            resolve(result)
+        })
+    })
+} 
+
 // Uploads ecopoints to database
 const create = (pData) => {
     return new Promise ((resolve, reject) => {
@@ -12,17 +23,17 @@ const create = (pData) => {
     })
 }
 
-// Deletes table content
-const removeAll = () => {
-    return new Promise((resolve, reject) => {
-        db.query('delete from epoints',
+const getAll = () => {
+    return new Promise ((resolve, reject) => {
+        db.query('select * from epoints'),
         (err, result) => {
             if(err) reject(err)
             resolve(result)
-        })
+        }
     })
-} 
+}
+
 
 module.exports = {
-    create, removeAll
+    create, removeAll, getAll
 }
