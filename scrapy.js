@@ -1,10 +1,15 @@
+require('dotenv').config()
+
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-const { create } = require('./models/epoints')
+const { connect } = require('./db')
+const { create, removeAll } = require('./models/epoints')
 
 const url = 'https://www.ecolec.es/reciclar-aparatos-electronicos/'
 const arrPins= []
+
+connect()
 
 async function getPinCoords(pUrl){
     const response = await axios.get(`${pUrl}`)
@@ -15,7 +20,15 @@ async function getPinCoords(pUrl){
     
     const coords = JSON.parse(coordsAtr[0].attribs['data-pick-up-points'])
 
-    create(coords)
+    //Esto limpia la tabla de los datos anteriores
+    await removeAll()
+
+    //Esto guarda nuevos datos
+    for(const coord of coords ){
+        await create(coord)
+    }
+
+    process.exit()
 }
 
 // Subir esto a la base de datos

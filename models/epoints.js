@@ -12,6 +12,17 @@ const create = (pData) => {
     })
 }
 
+// Deletes table content
+const removeAll = () => {
+    return new Promise((resolve, reject) => {
+        db.query('delete from epoints',
+        (err, result) => {
+            if(err) reject(err)
+            resolve(result)
+        })
+    })
+} 
+
 module.exports = {
-    create
+    create, removeAll
 }
