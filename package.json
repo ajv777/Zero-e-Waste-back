@@ -7,6 +7,16 @@
     "startdev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@angular/animations": "^9.1.4",
+    "@angular/common": "^9.1.4",
+    "@angular/compiler": "^9.1.4",
+    "@angular/compiler-cli": "^9.1.4",
+    "@angular/core": "^9.1.4",
+    "@angular/forms": "^9.1.4",
+    "@angular/language-service": "^9.1.4",
+    "@angular/platform-browser": "^9.1.4",
+    "@angular/platform-browser-dynamic": "^9.1.4",
+    "@angular/router": "^9.1.4",
     "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
