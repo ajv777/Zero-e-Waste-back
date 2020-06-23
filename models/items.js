@@ -72,8 +72,8 @@ const getByUser = (pUserName) => {
 // Al usar pData, eliminamos la necesidad de mantener orden en el segundo parámetro. La principal ventaja de esto es que si decidimos añadir más parámetros a la base de datos, es mucho menos lío implementarlos desde back
 const create = (pData) => {
     return new Promise((resolve, reject) => {
-        db.query('insert into items (name, description, register_date, pic_1, pic_2, pic_3, precio, post_delivery, hand_delivery, users_id_user, category_idCategory) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [pData.name, pData.description, pData.register_date, pData.pic_1, pData.pic_2, pData.pic_3, pData.precio, pData.post_delivery, pData.hand_delivery, pData.users_id_user, pData.category_idCategory],
+        db.query('insert into items (name, description, register_date, pic_1, pic_2, pic_3, precio, users_id_user, category_idCategory) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [pData.name, pData.description, pData.register_date, pData.pic_1, pData.pic_2, pData.pic_3, pData.precio, pData.users_id_user, pData.category_idCategory],
         (err, result) => {
             if (err) reject(err)
             resolve(result)
@@ -84,8 +84,8 @@ const create = (pData) => {
 // Edit an item
 const updateById = (pItemId, pData) => {
     return new Promise((resolve, reject) => {
-        db.query('update items set name = ?, description = ?, register_date = ?, pic_1 = ?, pic_2 = ?, pic_3 = ?, precio = ?, post_delivery = ?, hand_delivery = ?, category_idCategory = ? where idItem = ?',
-        [pData.Name, pData.Description, pData.Register_date, pData.Pic_1, pData.Pic_2, pData.Pic_3, pData.Precio, pData.Post_delivery, pData.Hand_delivery, pData.Category_idCategory, pItemId],
+        db.query('update items set name = ?, description = ?, register_date = ?, pic_1 = ?, pic_2 = ?, pic_3 = ?, precio = ?,  category_idCategory = ? where idItem = ?',
+        [pData.Name, pData.Description, pData.Register_date, pData.Pic_1, pData.Pic_2, pData.Pic_3, pData.Precio,  pData.Category_idCategory, pItemId],
         (err, result) => {
             if(err) reject(err)
             resolve(result)
