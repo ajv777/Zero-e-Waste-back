@@ -1,6 +1,8 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
+const { create } = require('./models/epoints')
+
 const url = 'https://www.ecolec.es/reciclar-aparatos-electronicos/'
 const arrPins= []
 
@@ -13,9 +15,7 @@ async function getPinCoords(pUrl){
     
     const coords = JSON.parse(coordsAtr[0].attribs['data-pick-up-points'])
 
-    console.log(coords[5].locality)
-
-
+    create(coords)
 }
 
 // Subir esto a la base de datos
