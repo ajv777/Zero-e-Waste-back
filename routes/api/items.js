@@ -130,6 +130,7 @@ router.delete("/:itemId", async (req, res) => {
 router.get('/user-detail/:itemId', async(req, res) => {
     try{
         const result = await itemsModel.getUserDetail(req.params.itemId)
+        result.Register_date = moment(result.Register_date).format("ll")
         res.json(result)
     }catch(err){
         res.status(500).json({error: err.message})
