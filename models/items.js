@@ -105,6 +105,18 @@ const remove = (pItemId) => {
     })
 }
 
+// Show user on item
+const getUserDetail = (pItemId) => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM items, users WHERE items.Users_Id_User = users.Id_User and items.idItem = ?', 
+        [pItemId],
+        (err, result) => {
+            if(err) reject(err)
+            resolve(result)
+        })
+    })
+}
+
 module.exports = {
-    getAll, getById, getByCat, getByPriceAsc: getByPriceAsc, getByPriceDesc, getByRegDate, getByUser, create, updateById, remove
+    getAll, getById, getByCat, getByPriceAsc, getByPriceDesc, getByRegDate, getByUser, create, updateById, remove, getUserDetail
 }  //comentario de prueba
