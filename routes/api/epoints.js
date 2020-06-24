@@ -18,7 +18,6 @@ async function getPinCoords(pUrl){
 
 router.get('/', async(req, res) => {
     try{
-        console.log('un texto')
         const rows = await epointsModel.getAll()
         res.json(rows)
     }catch (err) {
