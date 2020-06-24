@@ -25,11 +25,11 @@ const create = (pData) => {
 
 const getAll = () => {
     return new Promise ((resolve, reject) => {
-        db.query('select * from epoints'),
+        db.query('select * from epoints',
         (err, result) => {
             if(err) reject(err)
             resolve(result)
-        }
+        })
     })
 }
 
