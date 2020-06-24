@@ -3,7 +3,6 @@ const itemsModel = require("../../models/items");
 const { checkToken } = require("../middlewares");
 const app = require("express");
 const path = require("path");
-const moment = require("moment");
 
 //GET /api/items
 //
@@ -21,7 +20,6 @@ router.get("/", async (req, res) => {
 router.get("/:itemId", async (req, res) => {
   try {
     const row = await itemsModel.getById(req.params.itemId);
-    row.Register_date = moment(row.Register_date).format("ll");
     res.json(row);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -127,15 +125,14 @@ router.delete("/:itemId", async (req, res) => {
   }
 });
 
-router.get('/user-detail/:itemId', async(req, res) => {
-    try{
-        const result = await itemsModel.getUserDetail(req.params.itemId)
-        result.Register_date = moment(result.Register_date).format("ll")
-        res.json(result)
-    }catch(err){
-        res.status(500).json({error: err.message})
-    }
-})
+router.get("/user-detail/:itemId", async (req, res) => {
+  try {
+    const result = await itemsModel.getUserDetail(req.params.itemId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // IMAGE UPLOAD
 
