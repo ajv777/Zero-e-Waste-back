@@ -122,6 +122,7 @@ router.put("/:itemId", async (req, res) => {
       res.json({ error: "item was not updated" });
     }
   } catch (err) {
+    console.error(err.stack)
     res.status(500).json({ error: err.message });
   }
 });

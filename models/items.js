@@ -93,9 +93,9 @@ const getByUser = (pUserName) => {
 const create = (pData) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "insert into items (nameItem, description, register_date, pic_1, pic_2, pic_3, precio, users_id_user, category_idCategory) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "insert into items (NameItem, description, register_date, pic_1, pic_2, pic_3, precio, users_id_user, category_idCategory) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        pData.nameItem,
+        pData.NameItem,
         pData.description,
         pData.register_date,
         pData.pic_1,
