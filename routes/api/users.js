@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const moment = require("moment");
 const { checkToken } = require("../middlewares");
+const NodeGeocoder = require('node-geocoder')
 
 // QUERIES START HERE
 router.get("/", checkToken, async (req, res) => {
@@ -27,8 +28,19 @@ router.get("/:usersId", checkToken, async (req, res) => {
 
 // Editar perfil de usuario
 router.put("/:usersId", checkToken, async (req, res) => {
-  try {
-    console.log (req.body)
+  const options = {
+    provider: 'google',
+    apiKey: 'AIzaSyANsKZFN4hNNIWHsVwaYFTDtRRRyPgShYU',
+    formatter: null
+  }
+  
+  const geocoder = NodeGeocoder(options) 
+  
+  // GEOCODER ENDS HERE
+  try {    
+    const coords = await geocoder.geocode(req.body.Address, req.body.Localidad, req.body.Province)
+    req.body.Latitude = coords[0].latitude 
+    req.body.Longitude = coords[0].longitude 
     const result = await usersModel.updateById(req.params.usersId, req.body);
     if (result.affectedRows >= 1) {
       res.json({ success: "User was updated" });
@@ -59,11 +71,26 @@ router.delete("/:usersId", checkToken, async (req, res) => {
 
 // Retistro
 router.post("/", async (req, res) => {
+  // GEOCODER STARTS HERE
+
+const options = {
+  provider: 'google',
+  apiKey: 'AIzaSyANsKZFN4hNNIWHsVwaYFTDtRRRyPgShYU',
+  formatter: null
+}
+
+const geocoder = NodeGeocoder(options)
+
+const coords = await geocoder.geocode(req.body.address, req.body.localidad, req.body.province)
+console.log(coords)
+// GEOCODER ENDS HERE
   console.log(req.body);
   try {
     // el 2 es el factor de carga. Cuando dejemos de hacer pruebas es mejor subirlo a 10-12
     req.body.password = bcrypt.hashSync(req.body.password, 2);
     console.log(req.body);
+    req.body.latitude = coords[0].latitude 
+    req.body.longitude = coords[0].longitude
     const result = await usersModel.create(req.body);
     if (result.affectedRows >= 1) {
       res.json({ success: "Usuario registrado" });
@@ -105,6 +132,7 @@ function createToken(pUserId) {
   };
   return jwt.sign(payload, process.env.SECRET_KEY, options);
 }
-
 // LOGIN ENDS HERE
+
+
 module.exports = router;
