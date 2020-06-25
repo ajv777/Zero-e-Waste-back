@@ -27,6 +27,7 @@ const getByEmail = (pUsersEmail) => {
 }
 
 const create = (pData) => {
+    console.log(pData)
     return new Promise((resolve, reject) => {
         db.query("insert into users (name, surname, address, pc, localidad, province, phone_number, whatsapp, email, password, latitude, longitude, signup_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [pData.name, pData.surname, pData.address, pData.pc, pData.localidad, pData.province, pData.phone_number, pData.whatsapp, pData.email, pData.password, pData.latitude, pData.longitude, pData.signup_date],

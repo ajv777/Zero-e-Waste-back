@@ -78,8 +78,8 @@ console.log(coords)
     // el 2 es el factor de carga. Cuando dejemos de hacer pruebas es mejor subirlo a 10-12
     req.body.password = bcrypt.hashSync(req.body.password, 2);
     console.log(req.body);
-    req.body.latitude = coords.latitude 
-    req.body.longitude = coords.longitude
+    req.body.latitude = coords[0].latitude 
+    req.body.longitude = coords[0].longitude
     const result = await usersModel.create(req.body);
     if (result.affectedRows >= 1) {
       res.json({ success: "Usuario registrado" });
