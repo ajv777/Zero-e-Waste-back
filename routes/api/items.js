@@ -92,6 +92,7 @@ router.post("/", async (req, res) => {
       res.json({ error: "Create failed" });
     }
   } catch (err) {
+    console.error(err.stack)
     res.status(500).json({ error: err.message });
   }
 });
@@ -99,14 +100,29 @@ router.post("/", async (req, res) => {
 // usuario/:usuarioid -> editar productos en perfil (creo)
 router.put("/:itemId", async (req, res) => {
   try {
-    console.log(req.body);
-    const result = await itemsModel.updateById(req.params.itemId, req.body);
+    const data = req.body;
+    // Borro los campos para poder no añadirlos si la imagen no viene. Si vienen, la imagen se añade. Esto es para que las imagenes que no se modifiquen no se actualicen en base de datos, porque si no lo hiciésemos se actualizarían en base de datos a un valor que no es correcto
+    delete data.pic_1
+    delete data.pic_2 
+    delete data.pic_3
+    if(req.files.pic_1){
+      data.pic_1 = path.basename(req.files.pic_1.path)
+    }
+    if(req.files.pic_2){
+      data.pic_2 = path.basename(req.files.pic_2.path)
+    }
+    if(req.files.pic_3){
+      data.pic_3 = path.basename(req.files.pic_3.path)
+    }
+    
+    const result = await itemsModel.updateById(req.params.itemId, data);
     if (result.affectedRows >= 1) {
       res.json({ success: "item was updated" });
     } else {
       res.json({ error: "item was not updated" });
     }
   } catch (err) {
+    console.error(err.stack)
     res.status(500).json({ error: err.message });
   }
 });

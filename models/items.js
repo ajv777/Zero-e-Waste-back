@@ -93,9 +93,9 @@ const getByUser = (pUserName) => {
 const create = (pData) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "insert into items (nameItem, description, register_date, pic_1, pic_2, pic_3, precio, users_id_user, category_idCategory) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "insert into items (NameItem, description, register_date, pic_1, pic_2, pic_3, precio, users_id_user, category_idCategory) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        pData.nameItem,
+        pData.NameItem,
         pData.description,
         pData.register_date,
         pData.pic_1,
@@ -117,16 +117,10 @@ const create = (pData) => {
 const updateById = (pItemId, pData) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "update items set nameItem = ?, description = ?, register_date = ?, pic_1 = ?, pic_2 = ?, pic_3 = ?, precio = ?,  category_idCategory = ? where idItem = ?",
+      // Esto lo que hace es coger todos los objetos de data y pasárselos a la query. Los campos que estén se actualizan, y los que no, no se actualizan. Esto es necesario para que las pics se actualicen bien.
+      "update items set ? where idItem = ?",
       [
-        pData.NameItem,
-        pData.Description,
-        pData.Register_date,
-        pData.Pic_1,
-        pData.Pic_2,
-        pData.Pic_3,
-        pData.Precio,
-        pData.Category_idCategory,
+        pData,
         pItemId,
       ],
       (err, result) => {
