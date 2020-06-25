@@ -28,8 +28,19 @@ router.get("/:usersId", checkToken, async (req, res) => {
 
 // Editar perfil de usuario
 router.put("/:usersId", checkToken, async (req, res) => {
-  try {
-    console.log (req.body)
+  const options = {
+    provider: 'google',
+    apiKey: 'AIzaSyANsKZFN4hNNIWHsVwaYFTDtRRRyPgShYU',
+    formatter: null
+  }
+  
+  const geocoder = NodeGeocoder(options) 
+  
+  // GEOCODER ENDS HERE
+  try {    
+    const coords = await geocoder.geocode(req.body.Address, req.body.Localidad, req.body.Province)
+    req.body.Latitude = coords[0].latitude 
+    req.body.Longitude = coords[0].longitude 
     const result = await usersModel.updateById(req.params.usersId, req.body);
     if (result.affectedRows >= 1) {
       res.json({ success: "User was updated" });
