@@ -95,7 +95,7 @@ const create = (pData) => {
     db.query(
       "insert into items (NameItem, description, register_date, pic_1, pic_2, pic_3, precio, users_id_user, category_idCategory) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        pData.NameItem,
+        pData.nameItem,
         pData.description,
         pData.register_date,
         pData.pic_1,
@@ -119,10 +119,7 @@ const updateById = (pItemId, pData) => {
     db.query(
       // Esto lo que hace es coger todos los objetos de data y pasárselos a la query. Los campos que estén se actualizan, y los que no, no se actualizan. Esto es necesario para que las pics se actualicen bien.
       "update items set ? where idItem = ?",
-      [
-        pData,
-        pItemId,
-      ],
+      [pData, pItemId],
       (err, result) => {
         if (err) reject(err);
         resolve(result);
