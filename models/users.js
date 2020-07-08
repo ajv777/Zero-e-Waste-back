@@ -1,64 +1,107 @@
 const getAll = () => {
-    return new Promise((resolve, reject) => {
-        db.query("Select * from users", (err, rows) => {
-            if(err) reject(err)
-            resolve(rows)
-        })
-    })
-}
+  return new Promise((resolve, reject) => {
+    db.query("Select * from users", (err, rows) => {
+      if (err) reject(err);
+      resolve(rows);
+    });
+  });
+};
 
 const getById = (pUsersId) => {
-    return new Promise((resolve, reject) => {
-        db.query("Select * from users where Id_User = ?", [pUsersId], (err, rows) => {
-            if(err) reject(err)
-            resolve(rows)
-        })
-    })
-}
+  return new Promise((resolve, reject) => {
+    db.query(
+      "Select * from users where Id_User = ?",
+      [pUsersId],
+      (err, rows) => {
+        if (err) reject(err);
+        resolve(rows);
+      }
+    );
+  });
+};
 
 // login
 const getByEmail = (pUsersEmail) => {
-    return new Promise((resolve, reject) => {
-        db.query("Select * from users where email = ?", [pUsersEmail], (err, rows) => {
-            if(err) reject(err)
-            resolve(rows[0])
-        })
-    })
-}
+  return new Promise((resolve, reject) => {
+    db.query(
+      "Select * from users where email = ?",
+      [pUsersEmail],
+      (err, rows) => {
+        if (err) reject(err);
+        resolve(rows[0]);
+      }
+    );
+  });
+};
 
 const create = (pData) => {
-    console.log(pData)
-    return new Promise((resolve, reject) => {
-        db.query("insert into users (name, surname, address, pc, localidad, province, phone_number, whatsapp, email, password, latitude, longitude, signup_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [pData.name, pData.surname, pData.address, pData.pc, pData.localidad, pData.province, pData.phone_number, pData.whatsapp, pData.email, pData.password, pData.latitude, pData.longitude, pData.signup_date],
-        (err, result) => {
-            if (err) reject(err)
-            resolve(result)
-        })
-    })
-}
+  console.log(pData);
+  return new Promise((resolve, reject) => {
+    db.query(
+      "insert into users (name, surname, address, pc, localidad, province, phone_number, whatsapp, email, password, latitude, longitude, signup_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        pData.name,
+        pData.surname,
+        pData.address,
+        pData.pc,
+        pData.localidad,
+        pData.province,
+        pData.phone_number,
+        pData.whatsapp,
+        pData.email,
+        pData.password,
+        pData.latitude,
+        pData.longitude,
+        pData.signup_date,
+      ],
+      (err, result) => {
+        if (err) reject(err);
+        resolve(result);
+      }
+    );
+  });
+};
 
 const updateById = (pUsersId, pData) => {
-    console.log(pData)
-    return new Promise((resolve, reject) => {
-        db.query("Update users set name = ?, surname = ?, address = ?, pc = ?, localidad = ?, province = ?, phone_number = ?, whatsapp = ?, email = ?, latitude = ?, longitude = ?, signup_date = ? where Id_User = ?",
-        [pData.Name, pData.Surname, pData.Address, pData.PC, pData.Localidad, pData.Province, pData.Phone_number, pData.Whatsapp, pData.Email, pData.Latitude, pData.Longitude, pData.Signup_date, pUsersId],
-        (err, result) => {
-            if(err) reject(err)
-            resolve(result)
-        })
-    })
-}
+  console.log(pData);
+  return new Promise((resolve, reject) => {
+    db.query(
+      "Update users set name = ?, surname = ?, address = ?, pc = ?, localidad = ?, province = ?, phone_number = ?, whatsapp = ?, email = ?, latitude = ?, longitude = ?, signup_date = ? where Id_User = ?",
+      [
+        pData.Name,
+        pData.Surname,
+        pData.Address,
+        pData.PC,
+        pData.Localidad,
+        pData.Province,
+        pData.Phone_number,
+        pData.Whatsapp,
+        pData.Email,
+        pData.Latitude,
+        pData.Longitude,
+        pData.Signup_date,
+        pUsersId,
+      ],
+      (err, result) => {
+        if (err) reject(err);
+        resolve(result);
+      }
+    );
+  });
+};
 
 const remove = (pUsersId) => {
-    return new Promise((resolve, reject) => {
-        db.query("delete from users where Id_User = ?", [pUsersId],
-        (err, result) => {
-            if(err) reject(err)
-            resolve(result)
-        })
-    })
-}
+  return new Promise((resolve, reject) => {
+    db.query(
+      "delete from users where Id_User = ?",
+      [pUsersId],
+      (err, result) => {
+        if (err) reject(err);
+        resolve(result);
+      }
+    );
+  });
+};
 
 //Instalar jasonwebtoken y moment
 //El token se crea aquí
@@ -73,7 +116,7 @@ const remove = (pUsersId) => {
 } */
 
 //Crear un fichero de middlewares en routes
-//Middlewares exporta 
+//Middlewares exporta
 
 //En api va algo así como (cogido de gimnasio)
 /* const {checkToken} = require('./middlewares')
@@ -82,11 +125,14 @@ router.use('/clientes', checkToken, apliClientesRouter) */
 
 //Para saber qué hacer con el token, la respuesta está en los middlewares de appgimnasio
 
-//Merece la pena echar un ojo al isAdmin (Middlewares:43, routes/api/clientes: 30). 
+//Merece la pena echar un ojo al isAdmin (Middlewares:43, routes/api/clientes: 30).
 //Quizás se puede usar el mismo método para restringir acceso a usuarios que no están logueados
 
-
-
 module.exports = {
-    getAll, getById, getByEmail, create, updateById, remove
-}
+  getAll,
+  getById,
+  getByEmail,
+  create,
+  updateById,
+  remove,
+};
